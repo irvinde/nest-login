@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: mariadb_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}  # Contraseña segura para root
+      MYSQL_DATABASE: ${DB_NAME}  # Nombre de la base de datos por defecto
+      MYSQL_USER: ${DB_USER}  # Usuario de la base de datos
+      MYSQL_PASSWORD: ${DB_PASSWORD}  # Contraseña segura para el usuario
+    volumes:
+      - mariadb_data:/var/lib/mysql  # Persistencia de datos
+    ports:
+      - "3306:3306"  # Expone el puerto de MariaDB
+    networks:
+      - sisti_network
+
+volumes:
+  mariadb_data:
+
+networks:
+  sisti_network:
+    driver: bridge
